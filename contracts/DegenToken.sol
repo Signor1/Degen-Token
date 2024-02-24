@@ -93,4 +93,63 @@ contract DegenToken {
 
         emit Approval(msg.sender, _delegate, _amountOfToken);
     }
+
+    function allowance(
+        address _owner,
+        address _delegate
+    ) external view returns (uint) {
+        return allow[_owner][_delegate];
+    }
+
+    function transferFrom(
+        address _owner,
+        address _buyer,
+        uint256 _amountOfToken
+    ) external {
+        //sanity check
+        require(_owner != address(0), "Address zero is not allowed");
+        require(_buyer != address(0), "Address zero is not allowed");
+
+        require(_amountOfToken <= balances[_owner]);
+        require(_amountOfToken <= allow[_owner][msg.sender]);
+
+        // calculating the 10% of transfer amount
+        uint percentageCalc = (_amountOfToken * 10) / 100;
+        //owner's balance check
+        uint balanceCheck = _amountOfToken + percentageCalc;
+
+        require(
+            balances[_owner] >= balanceCheck,
+            "Owner's balance is not enough to run this transaction"
+        );
+
+        //burning the percentage calculation
+        burn(_owner, percentageCalc);
+
+        balances[_owner] = balances[_owner] - _amountOfToken;
+
+        allow[_owner][msg.sender] = allow[_owner][msg.sender] - _amountOfToken;
+
+        balances[_buyer] = balances[_buyer] + _amountOfToken;
+
+        emit Transfer(_owner, _buyer, _amountOfToken);
+    }
+
+    function burn(address _address, uint256 _amount) internal {
+        balances[_address] = balances[_address] - _amount;
+        totalSupply = totalSupply - _amount;
+
+        emit Transfer(_address, address(0), _amount);
+    }
+
+    //method called in the constructor
+    function mint(address to, uint256 _amount) internal {
+        uint256 actualSupply = _amount * (10 ** uint(decimal()));
+
+        balances[to] = balances[to] + actualSupply;
+
+        totalSupply = totalSupply + actualSupply;
+
+        emit Transfer(address(0), to, actualSupply);
+    }
 }
