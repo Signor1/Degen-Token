@@ -15,6 +15,10 @@ main().catch((error) => {
   process.exitCode = 1;
 });
 
-//Degen ERC20 Token deployed to 0x1c615A625d3af403192dE4838eb5639B403Fc9D8
+//Degen ERC20 Token deployed to 0xFd1c8408248A1B1E3d8d07b98733E3B819d1b81a
 
-// https://testnet.snowtrace.io/address/0x1c615A625d3af403192dE4838eb5639B403Fc9D8#code
+// contract address
+//https://testnet.snowtrace.io/address/0xFd1c8408248A1B1E3d8d07b98733E3B819d1b81a
+
+//link to the token
+//https://testnet.snowtrace.io/token/0xFd1c8408248A1B1E3d8d07b98733E3B819d1b81a?chainId=43113

@@ -15,8 +15,9 @@ To use the DegenToken ERC20 contract, you can interact with it directly on the A
 To interact with the DegenToken ERC20 contract:
 
 1. Use a compatible wallet or interface to connect to the Avalanche network.
-2. Access the contract using its address: [0x1c615A625d3af403192dE4838eb5639B403Fc9D8](https://testnet.snowtrace.io/address/0x1c615A625d3af403192dE4838eb5639B403Fc9D8).
-3. Utilize the provided functions to mint, transfer, redeem, check balances, and burn tokens.
+2. Access the contract using its address: [0xFd1c8408248A1B1E3d8d07b98733E3B819d1b81a](https://testnet.snowtrace.io/address/0xFd1c8408248A1B1E3d8d07b98733E3B819d1b81a).
+3. Link to the Degen Token:[0xFd1c8408248A1B1E3d8d07b98733E3B819d1b81a](https://testnet.snowtrace.io/token/0xFd1c8408248A1B1E3d8d07b98733E3B819d1b81a?chainId=43113).
+4. Utilize the provided functions to mint, transfer, redeem, check balances, and burn tokens.
 
 ## Contract Details
 
