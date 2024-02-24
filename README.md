@@ -1,70 +1,57 @@
-# SignorToken - ERC20 Token Contract
+# DegenToken Contract
 
-SignorToken is an ERC20 token contract built on Solidity using Hardhat. This contract allows users to manage and transfer tokens on the Ethereum blockchain.
+## Description
 
-## Features
+The DegenToken ERC20 contract is designed to create a unique token that can be earned by players in a gaming environment and then exchanged for rewards in an in-game store. It allows for minting new tokens, transferring tokens between players, redeeming tokens for in-game items, checking token balances, and burning tokens that are no longer needed. This contract is deployed on the Avalanche network, offering fast and low-fee transactions suitable for web3 gaming projects.
 
-- **ERC20 Compliance**: Follows the ERC20 standard interface for seamless integration with wallets and exchanges.
-- **Token Transfer**: Allows users to transfer tokens between addresses.
-- **Token Approval**: Enables users to approve other addresses to spend tokens on their behalf.
-- **Token Allowance**: Provides a method for querying the amount of tokens that an address is allowed to spend.
-- **Token Minting**: Minting function to create new tokens.
-- **Token Burning**: Burning function to remove tokens from circulation.
+## Getting Started
 
-## Requirements
+### Installing
 
-- Node.js
-- Hardhat
-- Solidity
+To use the DegenToken ERC20 contract, you can interact with it directly on the Avalanche network using the contract address provided. No installation or downloading is required.
 
-## Installation
+### Executing program
 
-1. Clone this repository:
+To interact with the DegenToken ERC20 contract:
 
-    ```bash
-    git clone https://github.com/Signor1/erc20-signor-token.git
-    ```
+1. Use a compatible wallet or interface to connect to the Avalanche network.
+2. Access the contract using its address: [0x1c615A625d3af403192dE4838eb5639B403Fc9D8](https://testnet.snowtrace.io/address/0x1c615A625d3af403192dE4838eb5639B403Fc9D8).
+3. Utilize the provided functions to mint, transfer, redeem, check balances, and burn tokens.
 
-2. Navigate to the project directory:
+## Contract Details
 
-    ```bash
-    cd signor-token
-    ```
+### Token Information
 
-3. Install dependencies:
+- Token Name: Degen
+- Token Symbol: DGN
 
-    ```bash
-    npm install
-    ```
+### Constructor
 
-## Usage
+- Initializes the contract owner as the deployer of the contract.
+- Mints an initial supply of 1000 Degen tokens and assigns them to the contract owner.
 
-1. Compile the contracts:
+### Functions
 
-    ```bash
-    npx hardhat compile
-    ```
+- `getTokenName()`: Returns the name of the token.
+- `getSymbol()`: Returns the symbol of the token.
+- `getTotalSupply()`: Returns the total supply of the token.
+- `balanceOf(address _address)`: Returns the balance of tokens for a given address.
+- `transfer(address _receiver, uint256 _amountOfToken)`: Transfers tokens from the sender's account to the specified receiver.
+- `approve(address _delegate, uint256 _amountOfToken)`: Approves the specified delegate to spend tokens on behalf of the sender.
+- `allowance(address _owner, address _delegate)`: Returns the amount of tokens that the delegate is allowed to spend on behalf of the owner.
+- `transferFrom(address _owner, address _buyer, uint256 _amountOfToken)`: Transfers tokens from one address to another, if approved.
+- `burn(address _address, uint256 _amount)`: Burns tokens from the specified address.
+- `mint(address to, uint256 _amount)`: Mints new tokens and assigns them to the specified address.
 
-2. Run unit tests:
+## Help
 
-    ```bash
-    npx hardhat test
-    ```
+If you encounter any issues or have questions about using the DegenToken ERC20 contract, please refer to the provided documentation or seek assistance from the Ethereum development community.
 
-3. Deploy the contract to an Ethereum network:
+## Authors
 
-    ```bash
-    npx hardhat run scripts/deploy.js --network <network-name>
-    ```
+- Emmanuel Omemgboji
+- Contact: [emmanuelomemgboji@gmail.com](mailto:emmanuelomemgboji@gmail.com)
 
-## Testing
+## License
 
-Unit tests are located in the `test` directory. You can run tests using Hardhat's testing framework.
-
-```bash
-npx hardhat test
-```
-
-## Contributing
-
-Contributions are welcome! If you find any issues or want to add new features, feel free to open an issue or submit a pull request.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
