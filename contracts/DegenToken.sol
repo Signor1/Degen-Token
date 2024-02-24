@@ -61,7 +61,7 @@ contract DegenToken {
 
         require(
             _amountOfToken <= balances[msg.sender],
-            "You can't take more than what is avaliable"
+            "Insufficient balance for this transfer"
         );
 
         // calculating the 10% of transfer amount
