@@ -20,4 +20,17 @@ contract DegenToken {
         //mint method
         mint(msg.sender, 1000 * (10 ** uint(decimal())));
     }
+
+    // event for logging
+    event Transfer(
+        address indexed sender,
+        address indexed reciever,
+        uint256 amount
+    );
+
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 amount
+    );
 }
