@@ -3,10 +3,12 @@ pragma solidity ^0.8.9;
 
 contract DegenToken {
     //the state variables
-    string tokenName = "Degen";
-    string tokenSymbol = "DGN";
-    uint256 totalSupply;
-    address owner;
+    string public name = "Degen";
+    string public symbol = "DGN";
+    uint256 public totalSupply;
+    uint8 public decimals = 18;
+
+    address public owner;
 
     //making an amount tracable by address
     mapping(address user => uint256) balances;
@@ -18,7 +20,7 @@ contract DegenToken {
     constructor() {
         owner = msg.sender;
         //mint method
-        mint(msg.sender, 1000 * (10 ** uint(decimal())));
+        mint(msg.sender, 1000000000 * (10 ** decimals));
     }
 
     // event for logging
@@ -33,22 +35,6 @@ contract DegenToken {
         address indexed spender,
         uint256 amount
     );
-
-    function getTokenName() external view returns (string memory) {
-        return tokenName;
-    }
-
-    function getSymbol() external view returns (string memory) {
-        return tokenSymbol;
-    }
-
-    function getTotalSupply() external view returns (uint256) {
-        return totalSupply;
-    }
-
-    function decimal() public pure returns (uint8) {
-        return 18;
-    }
 
     //balance check
     function balanceOf(address _address) external view returns (uint256) {
@@ -144,12 +130,16 @@ contract DegenToken {
 
     //method called in the constructor
     function mint(address to, uint256 _amount) internal {
-        uint256 actualSupply = _amount * (10 ** uint(decimal()));
+        uint256 actualSupply = _amount * (10 ** decimals);
 
         balances[to] = balances[to] + actualSupply;
 
         totalSupply = totalSupply + actualSupply;
 
         emit Transfer(address(0), to, actualSupply);
+    }
+
+    function transferOwnership(address _newOwner) external {
+        owner = _newOwner;
     }
 }
