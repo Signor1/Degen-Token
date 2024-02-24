@@ -33,4 +33,20 @@ contract DegenToken {
         address indexed spender,
         uint256 amount
     );
+
+    function getTokenName() external view returns (string memory) {
+        return tokenName;
+    }
+
+    function getSymbol() external view returns (string memory) {
+        return tokenSymbol;
+    }
+
+    function getTotalSupply() external view returns (uint256) {
+        return totalSupply;
+    }
+
+    function decimal() public pure returns (uint8) {
+        return 18;
+    }
 }
