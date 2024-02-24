@@ -14,4 +14,10 @@ contract DegenToken {
     //making an amount tracable by address A and address A traced by address B
     //key => (key => value)
     mapping(address => mapping(address => uint256)) allow;
+
+    constructor() {
+        owner = msg.sender;
+        //mint method
+        mint(msg.sender, 1000 * (10 ** uint(decimal())));
+    }
 }
