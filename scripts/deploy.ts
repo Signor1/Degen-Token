@@ -1,17 +1,11 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const tokenName = "Signortoken";
-  const tokenSymbol = "SOT";
+  const degenTokenContract = await ethers.deployContract("DegenToken");
 
-  const tokenContract = await ethers.deployContract("SignorToken", [
-    tokenName,
-    tokenSymbol,
-  ]);
+  await degenTokenContract.waitForDeployment();
 
-  await tokenContract.waitForDeployment();
-
-  console.log(`ERC20 Signortoken deployed to ${tokenContract.target}`);
+  console.log(`Degen ERC20 Token deployed to ${degenTokenContract.target}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
