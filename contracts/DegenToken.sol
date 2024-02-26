@@ -3,24 +3,37 @@ pragma solidity ^0.8.9;
 
 contract DegenToken {
     //the state variables
-    string public name = "Degen";
-    string public symbol = "DGN";
+    string public name = "Degen Gaming Token";
+    string public symbol = "DEGEN";
     uint256 public totalSupply;
     uint8 public decimals = 18;
 
     address public owner;
 
+    //store item struct
+    struct Item {
+        string name;
+        uint256 cost;
+    }
+
+    Item[] private items; //array
+
     //making an amount tracable by address
     mapping(address user => uint256) balances;
 
-    //making an amount tracable by address A and address A traced by address B
     //key => (key => value)
     mapping(address => mapping(address => uint256)) allow;
 
     constructor() {
         owner = msg.sender;
         //mint method
-        mint(msg.sender, 1000000000 * (10 ** decimals));
+        mint(msg.sender, 1000000 * (10 ** decimals));
+
+        _addStoreItem("Health", 70);
+        _addStoreItem("Skins", 55);
+        _addStoreItem("Emblems", 30);
+        _addStoreItem("Weapon", 80);
+        _addStoreItem("Diamond", 100);
     }
 
     // event for logging
@@ -36,12 +49,43 @@ contract DegenToken {
         uint256 amount
     );
 
+    event ItemRedeemed(address indexed player, string itemName, uint256 amount);
+
+    //modifier
+    modifier hasToken(uint256 _amount) {
+        require(balanceOf(msg.sender) >= _amount, "Not enough Degen Token");
+        _;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner is authorized");
+        _;
+    }
+
     //balance check
-    function balanceOf(address _address) external view returns (uint256) {
+    function balanceOf(address _address) public view returns (uint256) {
         return balances[_address];
     }
 
-    function transfer(address _reciever, uint256 _amountOfToken) external {
+    //the store items
+    function _addStoreItem(string memory _name, uint256 _cost) private {
+        items.push(Item(_name, _cost));
+    }
+
+    //redeem item function
+    function redeemItem(uint8 _itemId) external {
+        require(_itemId < items.length, "Invalid item ID");
+
+        Item memory item = items[_itemId];
+
+        require(balanceOf(msg.sender) >= item.cost, "Insufficient balance");
+
+        transfer(address(this), item.cost);
+
+        emit ItemRedeemed(msg.sender, item.name, item.cost);
+    }
+
+    function transfer(address _reciever, uint256 _amountOfToken) public {
         require(_reciever != address(0), "Address zero is not allowed");
         require(msg.sender != address(0), "Address zero is not allowed");
 
@@ -49,20 +93,6 @@ contract DegenToken {
             _amountOfToken <= balances[msg.sender],
             "Insufficient balance for this transfer"
         );
-
-        // calculating the 10% of transfer amount
-        uint percentageCalc = (_amountOfToken * 10) / 100;
-
-        //sender's balance check
-        uint balanceCheck = _amountOfToken + percentageCalc;
-
-        require(
-            balances[msg.sender] >= balanceCheck,
-            "Not enough balance to run this transaction"
-        );
-
-        //burning the percentage calculation
-        burn(msg.sender, percentageCalc);
 
         balances[msg.sender] = balances[msg.sender] - _amountOfToken;
 
@@ -99,19 +129,6 @@ contract DegenToken {
         require(_amountOfToken <= balances[_owner]);
         require(_amountOfToken <= allow[_owner][msg.sender]);
 
-        // calculating the 10% of transfer amount
-        uint percentageCalc = (_amountOfToken * 10) / 100;
-        //owner's balance check
-        uint balanceCheck = _amountOfToken + percentageCalc;
-
-        require(
-            balances[_owner] >= balanceCheck,
-            "Owner's balance is not enough to run this transaction"
-        );
-
-        //burning the percentage calculation
-        burn(_owner, percentageCalc);
-
         balances[_owner] = balances[_owner] - _amountOfToken;
 
         allow[_owner][msg.sender] = allow[_owner][msg.sender] - _amountOfToken;
@@ -121,15 +138,15 @@ contract DegenToken {
         emit Transfer(_owner, _buyer, _amountOfToken);
     }
 
-    function burn(address _address, uint256 _amount) internal {
-        balances[_address] = balances[_address] - _amount;
+    function burn(uint256 _amount) public hasToken(_amount) {
+        balances[msg.sender] = balances[msg.sender] - _amount;
         totalSupply = totalSupply - _amount;
 
-        emit Transfer(_address, address(0), _amount);
+        emit Transfer(msg.sender, address(0), _amount);
     }
 
     //method called in the constructor
-    function mint(address to, uint256 _amount) internal {
+    function mint(address to, uint256 _amount) public onlyOwner {
         uint256 actualSupply = _amount * (10 ** decimals);
 
         balances[to] = balances[to] + actualSupply;
