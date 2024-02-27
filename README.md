@@ -4,6 +4,8 @@
 
 The DegenToken ERC20 contract is designed to create a unique token that can be earned by players in a gaming environment and then exchanged for rewards in an in-game store. It allows for minting new tokens, transferring tokens between players, redeeming tokens for in-game items, checking token balances, and burning tokens that are no longer needed. This contract is deployed on the Avalanche network, offering fast and low-fee transactions suitable for web3 gaming projects.
 
+<img src="https://github.com/Signor1/Degen-Token/blob/bc5cac7d7ea109779b67f1a108648bdc8ee0199a/screenshot/Degen%20token%20on%20snowtrace.png"/>
+
 ## Getting Started
 
 ### Installing
