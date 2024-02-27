@@ -156,7 +156,7 @@ contract DegenToken {
         emit Transfer(address(0), to, actualSupply);
     }
 
-    function transferOwnership(address _newOwner) external {
+    function transferOwnership(address _newOwner) external onlyOwner {
         owner = _newOwner;
     }
 }
